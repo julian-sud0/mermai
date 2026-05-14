@@ -47,18 +47,7 @@ export default function App() {
     }
     setStatus("Exporting PDF…");
     try {
-      // Clone so svg2pdf can mutate freely without affecting the live DOM.
-      const clone = svg.cloneNode(true) as SVGSVGElement;
-      const holder = document.createElement("div");
-      holder.style.position = "fixed";
-      holder.style.left = "-99999px";
-      holder.appendChild(clone);
-      document.body.appendChild(holder);
-      try {
-        await exportSvgToPdf(clone);
-      } finally {
-        document.body.removeChild(holder);
-      }
+      await exportSvgToPdf(svg);
       setStatus("Exported.");
     } catch (e) {
       setStatus(`Export failed: ${e instanceof Error ? e.message : String(e)}`);

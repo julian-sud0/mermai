@@ -4,9 +4,6 @@ mermaid.initialize({
   startOnLoad: false,
   theme: "default",
   securityLevel: "loose",
-  // svg2pdf.js does not render <foreignObject>, so force plain <text> output.
-  htmlLabels: false,
-  flowchart: { htmlLabels: false },
   fontFamily: "-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif",
 });
 
