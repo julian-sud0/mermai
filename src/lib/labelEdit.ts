@@ -112,6 +112,13 @@ function replaceByText(
       );
     }
   }
+  // Final fallback: plain occurrence (sequence message text, note text,
+  // anything not wrapped in a recognised delimiter). Replaces the first
+  // match only — collisions with identical labels elsewhere accepted.
+  const idx = markup.indexOf(oldText);
+  if (idx !== -1) {
+    return markup.slice(0, idx) + newText + markup.slice(idx + oldText.length);
+  }
   return markup;
 }
 
