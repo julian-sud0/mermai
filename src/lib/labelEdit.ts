@@ -47,6 +47,17 @@ export function replaceLabel(
   return replaceByText(markup, target.oldText, newText);
 }
 
+export function removeElement(markup: string, oldText: string): string {
+  // Remove the first line that contains oldText. Handles sequence notes,
+  // messages, node declarations — anything whose text appears on its
+  // own line.
+  const lines = markup.split("\n");
+  const idx = lines.findIndex((l) => l.includes(oldText));
+  if (idx === -1) return markup;
+  lines.splice(idx, 1);
+  return lines.join("\n");
+}
+
 function replaceNodeLabel(
   markup: string,
   nodeId: string,

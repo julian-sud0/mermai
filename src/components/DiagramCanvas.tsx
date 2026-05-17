@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { renderToSvg } from "../lib/mermaidRender";
-import { extractNodeId, replaceLabel } from "../lib/labelEdit";
+import { extractNodeId, removeElement, replaceLabel } from "../lib/labelEdit";
 
 interface Props {
   markup: string;
@@ -118,13 +118,16 @@ export function DiagramCanvas({
   function commitEdit() {
     if (!edit) return;
     const next = edit.value.trim();
-    if (next && next !== edit.oldText) {
-      const updated = replaceLabel(
-        markup,
-        { nodeId: edit.nodeId, oldText: edit.oldText },
-        next,
+    if (next === "") {
+      onMarkupChange(removeElement(markup, edit.oldText));
+    } else if (next !== edit.oldText) {
+      onMarkupChange(
+        replaceLabel(
+          markup,
+          { nodeId: edit.nodeId, oldText: edit.oldText },
+          next,
+        ),
       );
-      onMarkupChange(updated);
     }
     setEdit(null);
   }
